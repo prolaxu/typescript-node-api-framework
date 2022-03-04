@@ -4,7 +4,7 @@ class BaseController{
     public sendResponse(res: Response, data: any,message:string =""):boolean{
         try{
             res.json({
-                status: "success",
+                success: true,
                 message: message,
                 data: data,
                 status_code: 200
@@ -18,7 +18,7 @@ class BaseController{
     public sendError(res: Response, error: any,message:string =""){
         try{
             res.status(400).json({
-                status: "error",
+                success: false,
                 message: message,
                 error: error,
                 status_code: 400
