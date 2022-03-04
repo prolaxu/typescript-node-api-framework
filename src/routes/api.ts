@@ -12,7 +12,7 @@ const auth = new AuthController();
 
 router.get('/', (res,req)=>home.index(res,req));
 // route for post crud
-router.use('/', crud('post',router,new PostController));
+router.use('/',authuser,crud('post',new PostController));
 
 // Api Auth
 router.post('/login', (req,res)=>auth.login(req,res));
