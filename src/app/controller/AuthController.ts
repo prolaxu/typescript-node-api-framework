@@ -21,7 +21,7 @@ class AuthController extends Controller{
                     user:this.user_response(user),
                     token
                 }
-                this.sendResponse(res,{fields},'Login success');
+                this.sendResponse(res,fields,'Login success');
             }else{
                 this.sendError(res,400,'Password is incorrect');
             }
