@@ -12,12 +12,12 @@ const auth = new AuthController();
 
 router.get('/', (res,req)=>home.index(res,req));
 // route for post crud
-router.use('/',authuser,crud('post',new PostController));
+router.use('/',crud('post',new PostController,authuser));
+router.get('/encrypt',authuser, (req,res)=>auth.encrypt(req,res));
 
 // Api Auth
 router.post('/login', (req,res)=>auth.login(req,res));
 router.post('/register', (req,res)=>auth.register(req,res));
-router.get('/encrypt',authuser, (req,res)=>auth.encrypt(req,res));
 
 // Export the router
 const  api:Router = router;
