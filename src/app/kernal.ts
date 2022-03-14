@@ -7,6 +7,7 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import * as http from "http";
 import * as socketio from "socket.io";
+import path from 'path';
 import NotificationService from './services/NotificationService';
 class Kernel{
     app = express();
@@ -25,6 +26,7 @@ class Kernel{
         this.init_server();
     }
     private init_routes(){
+        this.app.use('/', express.static(path.join(__dirname, '..','..', 'public')))
         this.app.use('/', web);
         this.app.use('/api', api);
         this.init_404();
