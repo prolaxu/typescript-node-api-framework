@@ -7,6 +7,7 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import * as http from "http";
 import * as socketio from "socket.io";
+import path from 'path';
 import NotificationService from './services/NotificationService';
 class Kernel{
     app = express();
@@ -25,6 +26,7 @@ class Kernel{
         this.init_server();
     }
     private init_routes(){
+        this.app.use('/', express.static(path.join(__dirname, '..','..', 'public')))
         this.app.use('/', web);
         this.app.use('/api', api);
         this.init_404();
@@ -68,8 +70,15 @@ class Kernel{
         });
     }
     private async init_database(){
-        const db=env.database.data;
-        await connect(`mongodb://${db.host}:${db.port}/${db.dbname}`);
+        try{
+            const db=env.database.data;
+            await connect(`mongodb://${db.host}:${db.port}/${db.dbname}`);
+        }catch(err){
+            console.log("Error connecting to database");
+            if(env.debug){
+                console.log(err);
+            }
+        }
     }
     private init_server(){
         this.server.listen(env.server.port, () => {
