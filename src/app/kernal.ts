@@ -70,8 +70,15 @@ class Kernel{
         });
     }
     private async init_database(){
-        const db=env.database.data;
-        await connect(`mongodb://${db.host}:${db.port}/${db.dbname}`);
+        try{
+            const db=env.database.data;
+            await connect(`mongodb://${db.host}:${db.port}/${db.dbname}`);
+        }catch(err){
+            console.log("Error connecting to database");
+            if(env.debug){
+                console.log(err);
+            }
+        }
     }
     private init_server(){
         this.server.listen(env.server.port, () => {
